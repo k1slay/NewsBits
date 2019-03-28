@@ -1,6 +1,9 @@
 package co.k2.newsbits.data.source;
 
-import co.k2.newsbits.data.NewsListener;
+import java.util.List;
+
+import co.k2.newsbits.data.models.Article;
+import io.reactivex.Flowable;
 
 /**
  * Copyright (C) 2019 K2 CODEWORKS
@@ -12,6 +15,6 @@ import co.k2.newsbits.data.NewsListener;
 
 public interface DataSource {
 
-    public void getHeadlines(String country, NewsListener listener);
+    public Flowable<List<Article>> getHeadlines(String country);
 
 }

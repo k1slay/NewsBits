@@ -4,7 +4,7 @@ import java.util.Map;
 
 import co.k2.newsbits.common.Constants;
 import co.k2.newsbits.data.models.ApiResponse;
-import retrofit2.Call;
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
@@ -19,6 +19,6 @@ import retrofit2.http.QueryMap;
 public interface NewsApiService {
 
     @GET(Constants.NewsApi.API_PATH)
-    Call<ApiResponse> query(@QueryMap Map<String, String> options);
+    Flowable<ApiResponse> query(@QueryMap Map<String, String> options);
 
 }

@@ -1,6 +1,14 @@
 package co.k2.newsbits.data;
 
+import android.content.Context;
+
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import javax.inject.Singleton;
+
+import androidx.room.Room;
 import co.k2.newsbits.common.Constants;
+import co.k2.newsbits.data.source.local.ArticlesDB;
 import co.k2.newsbits.data.source.remote.NewsApiService;
 import dagger.Module;
 import dagger.Provides;
@@ -23,12 +31,19 @@ public class DataModule {
         return new Retrofit.Builder()
                 .baseUrl(Constants.NewsApi.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
     @Provides
     public NewsApiService provideNewsApiService(Retrofit retrofit) {
         return retrofit.create(NewsApiService.class);
+    }
+
+    @Provides
+    @Singleton
+    public ArticlesDB provideArticlesDb(Context context) {
+        return Room.databaseBuilder(context, ArticlesDB.class, ArticlesDB.DB_NAME).build();
     }
 
 }

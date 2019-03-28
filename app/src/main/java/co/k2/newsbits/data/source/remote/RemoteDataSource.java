@@ -1,17 +1,16 @@
 package co.k2.newsbits.data.source.remote;
 
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import co.k2.newsbits.common.Constants;
-import co.k2.newsbits.data.NewsListener;
 import co.k2.newsbits.data.models.ApiResponse;
+import co.k2.newsbits.data.models.Article;
 import co.k2.newsbits.data.source.DataSource;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 
 /**
  * Copyright (C) 2019 K2 CODEWORKS
@@ -31,34 +30,15 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getHeadlines(String country, NewsListener listener) {
+    public Flowable<List<Article>> getHeadlines(String country) {
         HashMap<String, String> queryMap = new HashMap<>();
         queryMap.put(Constants.NewsApi.QUERY_KEY_COUNTRY, country);
         queryMap.put(Constants.NewsApi.QUERY_KEY_API, Constants.NewsApi.API_KEY);
-        newsApiService.query(queryMap).enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if (response.isSuccessful()) {
-                    ApiResponse apiResponse = response.body();
-                    if (apiResponse == null || !apiResponse.hasArticles()) {
-                        listener.onFailure(new Throwable(Constants.ERROR_NO_ARTICLES));
-                    } else if (!apiResponse.success()) {
-                        listener.onFailure(new Throwable(apiResponse.getErrorMessage()));
-                    } else {
-                        listener.onSuccess(apiResponse.getArticles());
-                    }
-                } else {
-                    try {
-                        listener.onFailure(new Exception(response.errorBody().string()));
-                    } catch (IOException e) {
-                        listener.onFailure(e);
-                    }
-                }
-            }
 
+        return newsApiService.query(queryMap).map(new Function<ApiResponse, List<Article>>() {
             @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                listener.onFailure(t);
+            public List<Article> apply(ApiResponse apiResponse) throws Exception {
+                return apiResponse.getArticles();
             }
         });
     }

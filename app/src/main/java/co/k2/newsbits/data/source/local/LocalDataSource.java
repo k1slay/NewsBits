@@ -1,9 +1,13 @@
 package co.k2.newsbits.data.source.local;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
-import co.k2.newsbits.data.NewsListener;
+import co.k2.newsbits.data.models.Article;
 import co.k2.newsbits.data.source.DataSource;
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 
 /**
  * Copyright (C) 2019 K2 CODEWORKS
@@ -15,14 +19,24 @@ import co.k2.newsbits.data.source.DataSource;
 
 public class LocalDataSource implements DataSource {
 
-    @Inject
-    public LocalDataSource() {
+    private final ArticlesDB articlesDB;
 
+    @Inject
+    public LocalDataSource(ArticlesDB db) {
+        this.articlesDB = db;
     }
 
     @Override
-    public void getHeadlines(String country, NewsListener listener) {
+    public Flowable<List<Article>> getHeadlines(String country) {
+        return articlesDB.savedBeaconDao().getAll();
+    }
 
+    public Completable saveToCache(List<Article> articles) {
+        return articlesDB.savedBeaconDao().insertAll(articles);
+    }
+
+    public Completable clearCache() {
+        return articlesDB.savedBeaconDao().deleteAll();
     }
 
 }
