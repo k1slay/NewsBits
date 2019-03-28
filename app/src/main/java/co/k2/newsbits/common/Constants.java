@@ -10,6 +10,7 @@ package co.k2.newsbits.common;
 
 public class Constants {
 
+    public static final String ERROR_NO_ARTICLES = "No articles available at the moment";
     static final String ISO8601_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
     public static class NewsApi {
