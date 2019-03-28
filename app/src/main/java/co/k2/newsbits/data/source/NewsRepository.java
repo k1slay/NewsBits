@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import co.k2.newsbits.data.models.Article;
-import co.k2.newsbits.data.source.local.LocalDataSource;
+import co.k2.newsbits.data.source.local.LocalDataSourceImpl;
 import co.k2.newsbits.data.source.remote.RemoteDataSource;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -21,12 +21,12 @@ import io.reactivex.Flowable;
 public class NewsRepository {
 
     private final RemoteDataSource remoteDataSource;
-    private final LocalDataSource localDataSource;
+    private final LocalDataSourceImpl localDataSource;
 
     @Inject
-    public NewsRepository(RemoteDataSource remoteDataSource, LocalDataSource localDataSource) {
+    public NewsRepository(RemoteDataSource remoteDataSource, LocalDataSourceImpl localDataSourceImpl) {
         this.remoteDataSource = remoteDataSource;
-        this.localDataSource = localDataSource;
+        this.localDataSource = localDataSourceImpl;
     }
 
     public Flowable<List<Article>> getCachedNews() {
