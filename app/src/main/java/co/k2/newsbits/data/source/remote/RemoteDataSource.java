@@ -3,6 +3,8 @@ package co.k2.newsbits.data.source.remote;
 import java.io.IOException;
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
 import co.k2.newsbits.common.Constants;
 import co.k2.newsbits.data.NewsListener;
 import co.k2.newsbits.data.models.ApiResponse;
@@ -23,6 +25,7 @@ public class RemoteDataSource implements DataSource {
 
     private final NewsApiService newsApiService;
 
+    @Inject
     public RemoteDataSource(NewsApiService newsApiService) {
         this.newsApiService = newsApiService;
     }

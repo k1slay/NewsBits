@@ -1,7 +1,9 @@
 package co.k2.newsbits.data.source;
 
+import javax.inject.Inject;
+
 import co.k2.newsbits.data.NewsListener;
-import co.k2.newsbits.data.source.cache.LocalDataSource;
+import co.k2.newsbits.data.source.local.LocalDataSource;
 import co.k2.newsbits.data.source.remote.RemoteDataSource;
 
 /**
@@ -17,6 +19,7 @@ public class NewsRepository {
     private final RemoteDataSource remoteDataSource;
     private final LocalDataSource localDataSource;
 
+    @Inject
     public NewsRepository(RemoteDataSource remoteDataSource, LocalDataSource localDataSource) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;

@@ -1,4 +1,6 @@
-package co.k2.newsbits.data.source.cache;
+package co.k2.newsbits.data.source.local;
+
+import javax.inject.Inject;
 
 import co.k2.newsbits.data.NewsListener;
 import co.k2.newsbits.data.source.DataSource;
@@ -12,6 +14,11 @@ import co.k2.newsbits.data.source.DataSource;
  */
 
 public class LocalDataSource implements DataSource {
+
+    @Inject
+    public LocalDataSource() {
+
+    }
 
     @Override
     public void getHeadlines(String country, NewsListener listener) {
