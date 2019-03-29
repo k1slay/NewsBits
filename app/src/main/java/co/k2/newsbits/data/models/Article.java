@@ -97,7 +97,7 @@ public class Article {
     }
 
     public String getPublishDate(Context context) {
-        return Utils.dateToLocalString(Utils.isoToDate(publishedAt), Utils.getLongDateFormat(context));
+        return Utils.dateToLocalString(Utils.isoToDate(publishedAt), Utils.getDateFormat());
     }
 
     public String getContent() {

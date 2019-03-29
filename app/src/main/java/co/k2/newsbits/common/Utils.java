@@ -1,7 +1,5 @@
 package co.k2.newsbits.common;
 
-import android.content.Context;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,8 +38,8 @@ public class Utils {
         return dateFormat.format(date);
     }
 
-    public static DateFormat getLongDateFormat(Context context) {
-        return android.text.format.DateFormat.getLongDateFormat(context);
+    public static DateFormat getDateFormat() {
+        return DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, Locale.getDefault());
     }
 
 }
