@@ -1,6 +1,6 @@
 package co.k2.newsbits.dagger;
 
-import co.k2.newsbits.MainActivity;
+import co.k2.newsbits.headlines.HeadlinesActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -17,6 +17,6 @@ public abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector
-    abstract MainActivity bindMainActivity();
+    abstract HeadlinesActivity bindHeadlineActivity();
 
 }
