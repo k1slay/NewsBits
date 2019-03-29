@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import co.k2.newsbits.data.models.Article;
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * Copyright (C) 2019 K2 CODEWORKS
@@ -26,7 +26,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
-    public Flowable<List<Article>> getHeadlines(String country) {
+    public Single<List<Article>> getHeadlines(String country) {
         return articlesDB.savedBeaconDao().getAll();
     }
 

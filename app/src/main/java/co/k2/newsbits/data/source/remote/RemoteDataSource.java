@@ -6,11 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import co.k2.newsbits.common.Constants;
-import co.k2.newsbits.data.models.ApiResponse;
 import co.k2.newsbits.data.models.Article;
 import co.k2.newsbits.data.source.DataSource;
-import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
+import io.reactivex.Single;
 
 /**
  * Copyright (C) 2019 K2 CODEWORKS
@@ -30,14 +28,16 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public Flowable<List<Article>> getHeadlines(String country) {
+    public Single<List<Article>> getHeadlines(String country) {
         HashMap<String, String> queryMap = new HashMap<>();
         queryMap.put(Constants.NewsApi.QUERY_KEY_COUNTRY, country);
         queryMap.put(Constants.NewsApi.QUERY_KEY_API, Constants.NewsApi.API_KEY);
-
-        return newsApiService.query(queryMap).map(new Function<ApiResponse, List<Article>>() {
-            @Override
-            public List<Article> apply(ApiResponse apiResponse) throws Exception {
+        return newsApiService.query(queryMap).map(apiResponse -> {
+            if (apiResponse == null || !apiResponse.hasArticles()) {
+                throw new RuntimeException(Constants.ERROR_NO_ARTICLES);
+            } else if (!apiResponse.success()) {
+                throw new RuntimeException(apiResponse.getErrorMessage());
+            } else {
                 return apiResponse.getArticles();
             }
         });

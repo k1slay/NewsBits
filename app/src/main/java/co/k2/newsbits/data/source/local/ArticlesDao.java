@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import co.k2.newsbits.data.models.Article;
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * Copyright (C) 2019 K2 CODEWORKS
@@ -22,7 +22,7 @@ import io.reactivex.Flowable;
 public interface ArticlesDao {
 
     @Query("SELECT * FROM cached_articles")
-    Flowable<List<Article>> getAll();
+    Single<List<Article>> getAll();
 
     @Query("DELETE FROM cached_articles")
     Completable deleteAll();
