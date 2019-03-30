@@ -59,7 +59,8 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
         } else {
             holder.thumbnail.setVisibility(View.GONE);
         }
-
+        holder.source.setText(article.getSource().getName());
+        holder.time.setText(article.getPublishedSince(holder.time.getContext()));
     }
 
     @Override
@@ -74,6 +75,12 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
 
         @BindView(R.id.subtitle)
         TextView subTitle;
+
+        @BindView(R.id.source)
+        TextView source;
+
+        @BindView(R.id.time)
+        TextView time;
 
         @BindView(R.id.headline_image)
         ImageView thumbnail;

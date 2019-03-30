@@ -57,7 +57,8 @@ public class HeadlinesActivity extends DaggerAppCompatActivity implements Headli
         if (adapter == null || adapter.getItemCount() == 0)
             loading.setVisibility(View.VISIBLE);
         error.setVisibility(View.INVISIBLE);
-        disposables.add(viewModel.fetchNewArticles("in")
+        String country = getResources().getConfiguration().locale.getCountry();
+        disposables.add(viewModel.fetchNewArticles(country)
                 .subscribe(articles -> {
                     setupList(articles);
                     disposables.add(viewModel.updateCache(articles));

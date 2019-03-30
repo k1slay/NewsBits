@@ -1,15 +1,20 @@
 package co.k2.newsbits.data.models;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+import co.k2.newsbits.R;
 import co.k2.newsbits.common.Constants;
 import co.k2.newsbits.common.Utils;
 
@@ -96,8 +101,26 @@ public class Article {
         return publishedAt;
     }
 
-    public String getPublishDate(Context context) {
+    public String getPublishDate() {
         return Utils.dateToLocalString(Utils.isoToDate(publishedAt), Utils.getDateFormat());
+    }
+
+    public String getPublishedSince(Context context) {
+        Resources res = context.getResources();
+        Date date = Utils.isoToDate(publishedAt);
+        long publishDiff = System.currentTimeMillis() - date.getTime();
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(publishDiff);
+        if (minutes < 1) {
+            return (context.getString(R.string.just_now));
+        } else if (minutes < 60) {
+            return String.format(res.getQuantityString(R.plurals.minutes_ago, (int) minutes), minutes);
+        }
+        long hours = TimeUnit.MINUTES.toHours(minutes);
+        if (hours < 24) {
+            return String.format(res.getQuantityString(R.plurals.hours_ago, (int) hours), hours);
+        }
+        long days = TimeUnit.HOURS.toDays(hours);
+        return String.format(res.getQuantityString(R.plurals.days_ago, (int) days), days);
     }
 
     public String getContent() {
