@@ -22,7 +22,7 @@ import co.k2.newsbits.data.models.Article;
 import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class HeadlinesActivity extends DaggerAppCompatActivity {
+public class HeadlinesActivity extends DaggerAppCompatActivity implements HeadlineClickListener {
 
     @Inject
     HeadlineViewModelFactory viewModelFactory;
@@ -91,7 +91,7 @@ public class HeadlinesActivity extends DaggerAppCompatActivity {
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                     HeadlinesActivity.this, DividerItemDecoration.VERTICAL
             );
-            adapter = new HeadlinesAdapter(articles);
+            adapter = new HeadlinesAdapter(articles, this);
             headlinesList.setLayoutManager(new LinearLayoutManager(HeadlinesActivity.this));
             headlinesList.addItemDecoration(dividerItemDecoration);
             headlinesList.setAdapter(adapter);
@@ -105,4 +105,10 @@ public class HeadlinesActivity extends DaggerAppCompatActivity {
         super.onStop();
         disposables.clear();
     }
+
+    @Override
+    public void onClick(int position, Article article) {
+        viewModel.openNewsArticle(this, article);
+    }
+
 }

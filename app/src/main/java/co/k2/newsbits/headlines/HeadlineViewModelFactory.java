@@ -18,17 +18,19 @@ import co.k2.newsbits.data.source.NewsRepository;
 public class HeadlineViewModelFactory implements ViewModelProvider.Factory {
 
     private final NewsRepository newsRepository;
+    private final Navigator navigator;
 
     @Inject
-    public HeadlineViewModelFactory(NewsRepository repository) {
+    public HeadlineViewModelFactory(NewsRepository repository, Navigator navigator) {
         this.newsRepository = repository;
+        this.navigator = navigator;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(HeadlineViewModel.class)) {
-            return (T) new HeadlineViewModel(newsRepository);
+            return (T) new HeadlineViewModel(newsRepository, navigator);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

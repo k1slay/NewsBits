@@ -31,9 +31,11 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
 
     private final List<Article> articles;
     public static final int TYPE_MAIN = Integer.MAX_VALUE;
+    private final HeadlineClickListener clickListener;
 
-    public HeadlinesAdapter(List<Article> articles) {
+    public HeadlinesAdapter(List<Article> articles, HeadlineClickListener clickListener) {
         this.articles = articles;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -83,7 +85,8 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
 
         @OnClick(R.id.holder)
         void onHeadlineClick() {
-
+            if (clickListener != null)
+                clickListener.onClick(getAdapterPosition(), articles.get(getAdapterPosition()));
         }
     }
 
@@ -95,7 +98,7 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
         return super.getItemViewType(position);
     }
 
-    public static class HlDiffUtil extends DiffUtil.Callback {
+    private static class HlDiffUtil extends DiffUtil.Callback {
 
         private final List<Article> newArticles;
         private final List<Article> oldArticles;

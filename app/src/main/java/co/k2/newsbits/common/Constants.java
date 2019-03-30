@@ -13,6 +13,7 @@ public class Constants {
     public static final String ERROR_NO_ARTICLES = "No articles available at the moment";
     public static final String ARTICLE_CACHE_TABLE_NAME = "cached_articles";
     static final String ISO8601_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    public static final String CHROME_PACKAGE = "com.android.chrome";
 
     public static class NewsApi {
         public static final String BASE_URL = "https://newsapi.org";

@@ -1,6 +1,8 @@
 package co.k2.newsbits.common;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -50,6 +52,21 @@ public class Utils {
         final ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+    public static boolean isChromeInstalled(Context context) {
+        return getPackageInfo(context, Constants.CHROME_PACKAGE) != null;
+    }
+
+    private static PackageInfo getPackageInfo(Context context, String appPackage) {
+        PackageInfo pi = null;
+        PackageManager pm = context.getPackageManager();
+        try {
+            pi = pm.getPackageInfo(appPackage, PackageManager.GET_ACTIVITIES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.getMessage();
+        }
+        return pi;
     }
 
 }
