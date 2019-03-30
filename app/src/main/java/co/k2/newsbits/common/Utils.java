@@ -1,5 +1,9 @@
 package co.k2.newsbits.common;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +44,12 @@ public class Utils {
 
     public static DateFormat getDateFormat() {
         return DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, Locale.getDefault());
+    }
+
+    public static boolean isInternetConnected(Context context) {
+        final ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnected();
     }
 
 }

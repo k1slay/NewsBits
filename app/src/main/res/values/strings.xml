@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">News Bits</string>
+    <string name="app_name">Newsly</string>
+    <string name="error_no_internet">No internet access</string>
+    <string name="error_headline_service">Error fetching news</string>
 </resources>
