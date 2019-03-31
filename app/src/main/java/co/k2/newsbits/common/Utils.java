@@ -3,6 +3,7 @@ package co.k2.newsbits.common;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -12,6 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+
+import co.k2.newsbits.R;
 
 /**
  * Copyright (C) 2019 K2 CODEWORKS
@@ -67,6 +71,23 @@ public class Utils {
             e.getMessage();
         }
         return pi;
+    }
+
+    public static String dateToTimeSinceText(Context context, Date date) {
+        Resources res = context.getResources();
+        long publishDiff = System.currentTimeMillis() - date.getTime();
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(publishDiff);
+        if (minutes < 1) {
+            return (context.getString(R.string.just_now));
+        } else if (minutes < 60) {
+            return String.format(res.getQuantityString(R.plurals.minutes_ago, (int) minutes), minutes);
+        }
+        long hours = TimeUnit.MINUTES.toHours(minutes);
+        if (hours < 24) {
+            return String.format(res.getQuantityString(R.plurals.hours_ago, (int) hours), hours);
+        }
+        long days = TimeUnit.HOURS.toDays(hours);
+        return String.format(res.getQuantityString(R.plurals.days_ago, (int) days), days);
     }
 
 }

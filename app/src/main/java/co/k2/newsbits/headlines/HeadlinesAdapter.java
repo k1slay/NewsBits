@@ -52,7 +52,12 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
     public void onBindViewHolder(@NonNull HeadlineViewHolder holder, int position) {
         Article article = articles.get(position);
         holder.title.setText(article.getTitle());
-        holder.subTitle.setText(article.getDescription());
+        if (article.getDescription() == null || article.getDescription().isEmpty()) {
+            holder.subTitle.setVisibility(View.GONE);
+        } else {
+            holder.subTitle.setVisibility(View.VISIBLE);
+            holder.subTitle.setText(article.getDescription());
+        }
         if (article.getUrlToImage() != null && article.getUrlToImage().startsWith("https://")) {
             holder.thumbnail.setVisibility(View.VISIBLE);
             ImageUtils.loadImageIntoView(holder.thumbnail, article.getUrlToImage(), R.drawable.ic_outline_photo);
@@ -136,7 +141,7 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
         }
     }
 
-    void update(List<Article> newArticles) {
+    public void update(List<Article> newArticles) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new HlDiffUtil(newArticles, articles));
         this.articles.clear();
         this.articles.addAll(newArticles);

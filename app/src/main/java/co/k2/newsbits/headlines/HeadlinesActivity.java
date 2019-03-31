@@ -41,7 +41,7 @@ public class HeadlinesActivity extends DaggerAppCompatActivity implements Headli
     @BindView(R.id.error_text)
     TextView errorText;
 
-    private HeadlinesAdapter adapter;
+    public HeadlinesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class HeadlinesActivity extends DaggerAppCompatActivity implements Headli
         );
     }
 
-    private void showError(Throwable throwable) {
+    public void showError(Throwable throwable) {
         loading.setVisibility(View.INVISIBLE);
         boolean hasInternet = Utils.isInternetConnected(HeadlinesActivity.this);
         String exception = hasInternet ? throwable.getMessage() : getString(R.string.error_no_internet);
@@ -85,7 +85,7 @@ public class HeadlinesActivity extends DaggerAppCompatActivity implements Headli
         }
     }
 
-    private void setupList(List<Article> articles) {
+    public void setupList(List<Article> articles) {
         loading.setVisibility(View.INVISIBLE);
         error.setVisibility(View.INVISIBLE);
         if (adapter == null) {
