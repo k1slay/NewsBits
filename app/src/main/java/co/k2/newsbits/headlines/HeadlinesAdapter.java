@@ -1,5 +1,7 @@
 package co.k2.newsbits.headlines;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +32,12 @@ import co.k2.newsbits.data.models.Article;
 public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.HeadlineViewHolder> {
 
     private final List<Article> articles;
-    public static final int TYPE_MAIN = Integer.MAX_VALUE;
+    private static final int TYPE_MAIN = Integer.MAX_VALUE;
     private final HeadlineClickListener clickListener;
+    private final Context context;
 
-    public HeadlinesAdapter(List<Article> articles, HeadlineClickListener clickListener) {
+    public HeadlinesAdapter(Context context, List<Article> articles, HeadlineClickListener clickListener) {
+        this.context = context;
         this.articles = articles;
         this.clickListener = clickListener;
     }
@@ -65,7 +69,7 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
             holder.thumbnail.setVisibility(View.GONE);
         }
         holder.source.setText(article.getSource().getName());
-        holder.time.setText(article.getPublishedSince(holder.time.getContext()));
+        holder.time.setText(article.getPublishedSince(context));
     }
 
     @Override
@@ -104,7 +108,7 @@ public class HeadlinesAdapter extends RecyclerView.Adapter<HeadlinesAdapter.Head
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
+        if (position == 0 && context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             return TYPE_MAIN;
         }
         return super.getItemViewType(position);

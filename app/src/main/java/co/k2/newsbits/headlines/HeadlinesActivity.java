@@ -7,6 +7,8 @@ import android.widget.TextView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -49,6 +51,7 @@ public class HeadlinesActivity extends DaggerAppCompatActivity implements Headli
 
     public HeadlinesAdapter adapter;
     private long lastUpdateTime;
+    public static final String KEY_LAST_UPDATE = "last_update_time";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,14 @@ public class HeadlinesActivity extends DaggerAppCompatActivity implements Headli
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(HeadlineViewModel.class);
+        if (savedInstanceState != null)
+            lastUpdateTime = savedInstanceState.getLong(KEY_LAST_UPDATE);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NotNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putLong(KEY_LAST_UPDATE, lastUpdateTime);
     }
 
     @Override
@@ -114,7 +125,7 @@ public class HeadlinesActivity extends DaggerAppCompatActivity implements Headli
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                     HeadlinesActivity.this, DividerItemDecoration.VERTICAL
             );
-            adapter = new HeadlinesAdapter(articles, this);
+            adapter = new HeadlinesAdapter(this, articles, this);
             headlinesList.setLayoutManager(new LinearLayoutManager(HeadlinesActivity.this));
             headlinesList.addItemDecoration(dividerItemDecoration);
             headlinesList.setAdapter(adapter);

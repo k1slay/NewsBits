@@ -16,7 +16,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/title"
-        app:layout_constraintWidth_percent="0.3" />
+        app:layout_constraintWidth_percent="@dimen/list_image_width_pc" />
 
     <TextView
         android:id="@+id/title"
