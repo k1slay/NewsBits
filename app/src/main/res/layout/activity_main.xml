@@ -88,6 +88,43 @@
             app:layout_constraintTop_toBottomOf="@id/error_logo"
             app:layout_constraintWidth_percent="0.6" />
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/error_retry_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/retry"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:chipBackgroundColor="@color/colorAccent"
+            app:chipEndPadding="12dp"
+            app:chipIcon="@drawable/ic_reload"
+            app:chipIconTint="@android:color/white"
+            app:chipStartPadding="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/error_text" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/offline_retry_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/offline"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:chipBackgroundColor="@color/colorAccent"
+        app:chipEndPadding="12dp"
+        app:chipIcon="@drawable/ic_reload"
+        app:chipIconTint="@android:color/white"
+        app:chipStartPadding="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

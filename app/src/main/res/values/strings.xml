@@ -3,6 +3,8 @@
     <string name="error_no_internet">No internet access</string>
     <string name="error_headline_service">Error fetching news</string>
     <string name="just_now">Just now</string>
+    <string name="offline">Offline</string>
+    <string name="retry">Retry</string>
     <plurals name="hours_ago">
         <item quantity="one">%d hour ago</item>
         <item quantity="other">%d hours ago</item>
