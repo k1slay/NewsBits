@@ -5,6 +5,7 @@
     <string name="just_now">Just now</string>
     <string name="offline">Offline</string>
     <string name="retry">Retry</string>
+    <string name="not_available">N/A</string>
     <plurals name="hours_ago">
         <item quantity="one">%d hour ago</item>
         <item quantity="other">%d hours ago</item>
