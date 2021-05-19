@@ -78,12 +78,13 @@ fun Headline(
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        if (position == 0 && article.urlToImage != null) {
-            RemoteImage(url = article.urlToImage, aspectRatio = 1.7F)
+        val imageOnSide = position > 0 && article.urlToImage != null
+        if (imageOnSide.not()) {
+            article.urlToImage?.let { RemoteImage(url = it, aspectRatio = 1.7F) }
             Spacer(modifier = Modifier.height(8.dp))
         }
         Row {
-            val width = if (position == 0) 1.0F else 0.7F
+            val width = if (imageOnSide) 0.7F else 1.0F
             Column(Modifier.fillMaxWidth(width)) {
                 Text(
                     article.title,
@@ -99,15 +100,15 @@ fun Headline(
                     )
                 }
                 Spacer(modifier = Modifier.size(8.dp))
-                val miniWidth = if (position == 0) 0.7F else 1.0F
+                val miniWidth = if (imageOnSide) 1.0F else 0.7F
                 Row(modifier = Modifier.fillMaxWidth(miniWidth)) {
                     CaptionText(text = article.author)
                     CaptionText(article.getPublishedSince(LocalContext.current))
                 }
             }
-            if (article.urlToImage != null && position > 0) {
+            if (imageOnSide) {
                 Spacer(modifier = Modifier.width(8.dp))
-                RemoteImage(url = article.urlToImage, aspectRatio = 1.0F)
+                article.urlToImage?.let { RemoteImage(url = it, aspectRatio = 1.0F) }
             }
         }
         Spacer(modifier = Modifier.size(8.dp))
